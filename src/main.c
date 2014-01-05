@@ -101,7 +101,7 @@ int main(int argc, char **argv)
 	 printf(_("Start sector %ld (nr of hidden sectors) successfully written to %s\n"),
 		partition_start_sector(fp),
 		argv[argc-1]);
-	 if( write_partition_physical_disk_drive_id(fp) )
+	 if( write_partition_physical_disk_drive_id_fat32(fp) )
 	 {
 	    printf(_("Physical disk drive id 0x80 (C:) successfully written to %s\n"),
 		   argv[argc-1]);
