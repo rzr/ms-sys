@@ -146,6 +146,8 @@ int sanity_check(FILE *fp, const char *szPath, int iBr, int bPrintMessages)
       case MBR_95B:
       case MBR_DOS:
       case MBR_SYSLINUX:
+      case MBR_RUFUS:
+      case MBR_REACTOS:
       case MBR_ZERO:
       {
 	 if( ! bIsDiskDevice )
@@ -208,6 +210,7 @@ int sanity_check(FILE *fp, const char *szPath, int iBr, int bPrintMessages)
       break;
       case FAT16_BR:
       case FAT16FD_BR:
+	  case FAT16ROS_BR:
       {
 	 if( ! bIsPartition )
 	 {
@@ -236,6 +239,7 @@ int sanity_check(FILE *fp, const char *szPath, int iBr, int bPrintMessages)
       case FAT32_BR:
       case FAT32NT_BR:
       case FAT32FD_BR:
+      case FAT32ROS_BR:
       {
 	 if( ! bIsPartition )
 	 {
@@ -347,6 +351,13 @@ void diagnose(FILE *fp, const char *szPath)
 	 printf(
 	    _("would create with the switch -5 on a FAT16 partition.\n"));
       }
+      else if(entire_fat_16_ros_br_matches(fp))
+      {
+	 printf(
+	  _("it is exactly the kind of FAT16 ReactOS boot record this program\n"));
+	 printf(
+	    _("would create with the switch -o on a FAT16 partition.\n"));
+      }
       else if(entire_fat_32_br_matches(fp))
       {
 	 printf(
@@ -367,6 +378,13 @@ void diagnose(FILE *fp, const char *szPath)
 	   _("it is exactly the kind of FAT32 FreeDOS boot record this program\n"));
 	 printf(
 	    _("would create with the switch -4 on a FAT32 partition.\n"));
+      }
+      else if(entire_fat_32_ros_br_matches(fp))
+      {
+	 printf(
+	   _("it is exactly the kind of FAT32 ReactOS boot record this program\n"));
+	 printf(
+	    _("would create with the switch -O on a FAT32 partition.\n"));
       }
       else
       {
@@ -432,6 +450,20 @@ void diagnose(FILE *fp, const char *szPath)
 	    _("it is a public domain syslinux master boot record, like the one this\n"));
 	 printf(
 	    _("program creates with the switch -s on a hard disk device.\n"));
+   }
+   else if(is_rufus_mbr(fp))
+   {
+         printf(
+            _("it is a Rufus master boot record, like the one this\n"));
+         printf(
+            _("program creates with the switch -r on a hard disk device.\n"));
+   }
+   else if(is_reactos_mbr(fp))
+   {
+         printf(
+            _("it is a ReactOS master boot record, like the one this\n"));
+         printf(
+            _("program creates with the switch -r on a hard disk device.\n"));
    }
    else if(is_zero_mbr(fp))
    {
