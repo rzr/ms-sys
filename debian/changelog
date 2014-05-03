@@ -1,0 +1,5 @@
+ms-sys (0.0.0-1) unstable; urgency=low
+
+  * Initial release (Closes: #nnnn)  <nnnn is the bug number of your ITP>
+
+ -- Philippe Coval <rzr@gna.org>  Sat, 03 May 2014 13:30:25 +0200
